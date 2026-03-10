@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我们的家 | Our Family</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-warm: #fef7f0;
+            --bg-cream: #fff8f0;
+            --primary: #ff8c42;
+            --primary-light: #ffb380;
+            --secondary: #6b5b95;
+            --accent-green: #88b04b;
+            --accent-blue: #3498db;
+            --accent-pink: #e91e63;
+            --text-dark: #2d3436;
+            --text-light: #636e72;
+            --card-bg: #ffffff;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, var(--bg-warm) 0%, var(--bg-cream) 100%);
+            min-height: 100vh;
+            color: var(--text-dark);
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-btn {
+            padding: 10px 20px;
+            border: none;
+            background: transparent;
+            color: var(--text-light);
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Main */
+        main { padding-top: 80px; min-height: 100vh; }
+
+        .section {
+            display: none;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .section.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Home */
+        .home-hero { text-align: center; padding: 60px 20px; }
+
+        .home-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .home-hero p { font-size: 1.2rem; color: var(--text-light); margin-bottom: 40px; }
+
+        .family-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        /* Family Card */
+        .family-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .family-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 5px;
+        }
+
+        .family-card.wo::before { background: linear-gradient(90deg, #ff8c42, #ffb380); }
+        .family-card.yi::before { background: linear-gradient(90deg, #6b5b95, #9b8bc5); }
+        .family-card.blue::before { background: linear-gradient(90deg, #3498db, #5dade2); }
+        .family-card.pink::before { background: linear-gradient(90deg, #e91e63, #f06292); }
+
+        .family-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-hover); }
+
+        .card-avatar {
+            width: 120px; height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            object-fit: cover;
+            border: 4px solid;
+            transition: transform 0.3s ease;
+        }
+
+        .family-card.wo .card-avatar { border-color: var(--primary-light); }
+        .family-card.yi .card-avatar { border-color: #9b8bc5; }
+        .family-card.blue .card-avatar { border-color: #5dade2; }
+        .family-card.pink .card-avatar { border-color: #f06292; }
+
+        .family-card:hover .card-avatar { transform: scale(1.05) rotate(3deg); }
+
+        .emoji-avatar {
+            display: flex; align-items: center; justify-content: center;
+            font-size: 3rem;
+        }
+
+        .card-name { font-size: 1.4rem; font-weight: 700; margin-bottom: 8px; }
+        .card-role { color: var(--text-light); font-size: 0.9rem; margin-bottom: 15px; }
+
+        .card-tags {
+            display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+        }
+
+        .tag {
+            padding: 5px 12px; border-radius: 15px;
+            font-size: 0.8rem; font-weight: 500;
+        }
+
+        .tag.wo { background: #ffe8d6; color: #e67e22; }
+        .tag.yi { background: #e8e4f0; color: #6b5b95; }
+        .tag.blue { background: #d4e6f1; color: #2980b9; }
+        .tag.pink { background: #f8bbd9; color: #c2185b; }
+
+        /* Profile */
+        .back-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 12px 24px;
+            background: var(--primary); color: white;
+            border: none; border-radius: 25px;
+            font-size: 1rem; font-weight: 500;
+            cursor: pointer; margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover { background: #e67e22; transform: translateX(-5px); }
+
+        .profile-container {
+            background: var(--card-bg);
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .profile-header {
+            position: relative; height: 280px; overflow: hidden;
+        }
+
+        .profile-cover { width: 100%; height: 100%; object-fit: cover; }
+
+        .emoji-cover {
+            display: flex; align-items: center; justify-content: center;
+            font-size: 5rem;
+        }
+
+        .profile-cover-gradient {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            height: 150px;
+            background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+        }
+
+        .profile-avatar-container {
+            position: absolute;
+            bottom: -60px; left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+        }
+
+        .profile-avatar {
+            width: 150px; height: 150px;
+            border-radius: 50%; border: 6px solid white;
+            object-fit: cover;
+            box-shadow: var(--shadow);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .emoji-avatar-large {
+            display: flex; align-items: center; justify-content: center;
+            font-size: 4rem;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .profile-body { padding: 80px 40px 40px; text-align: center; }
+
+        .profile-name { font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
+
+        .profile-role { color: var(--text-light); font-size: 1.1rem; margin-bottom: 25px; }
+
+        .profile-stats {
+            display: flex; justify-content: center; gap: 40px;
+            margin-bottom: 30px; flex-wrap: wrap;
+        }
+
+        .stat { text-align: center; }
+        .stat-value { font-size: 1.8rem; font-weight: 700; color: var(--primary); }
+        .stat-label { color: var(--text-light); font-size: 0.9rem; }
+
+        .profile-bio {
+            max-width: 600px;
+            margin: 0 auto 30px;
+            line-height: 1.8;
+            color: var(--text-light);
+            font-size: 1.05rem;
+        }
+
+        /* Details */
+        .profile-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            max-width: 600px;
+            margin: 0 auto 30px;
+            text-align: left;
+        }
+
+        .detail-item {
+            display: flex; align-items: center; gap: 12px;
+            padding: 15px;
+            background: var(--bg-warm);
+            border-radius: 12px;
+        }
+
+        .detail-icon { font-size: 1.5rem; }
+        .detail-content h4 { font-size: 0.85rem; color: var(--text-light); margin-bottom: 3px; }
+        .detail-content p { font-weight: 600; color: var(--text-dark); }
+
+        /* Traits */
+        .traits-container { margin-top: 30px; }
+
+        .trait { margin-bottom: 20px; }
+
+        .trait-header {
+            display: flex; justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .trait-name { font-weight: 600; }
+        .trait-value { color: var(--primary); font-weight: 700; }
+
+        .trait-bar {
+            height: 10px; background: #eee;
+            border-radius: 5px; overflow: hidden;
+        }
+
+        .trait-progress {
+            height: 100%; border-radius: 5px;
+            transition: width 1s ease;
+        }
+
+        .trait-progress.wo { background: linear-gradient(90deg, var(--primary), var(--primary-light)); }
+        .trait-progress.yi { background: linear-gradient(90deg, var(--secondary), #9b8bc5); }
+        .trait-progress.blue { background: linear-gradient(90deg, var(--accent-blue), #5dade2); }
+        .trait-progress.pink { background: linear-gradient(90deg, var(--accent-pink), #f06292); }
+        .trait-progress.gold { background: linear-gradient(90deg, #f39c12, #f7dc6f); }
+
+        /* Gallery */
+        .gallery { margin-top: 40px; padding-top: 40px; border-top: 1px solid #eee; }
+        .gallery-title { font-size: 1.3rem; margin-bottom: 10px; color: var(--text-dark); }
+        .gallery-subtitle { color: #666; margin-bottom: 20px; }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .gallery-item {
+            aspect-ratio: 1; border-radius: 15px;
+            overflow: hidden; cursor: zoom-in;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover { transform: scale(1.03); }
+
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* Footer */
+        footer { text-align: center; padding: 40px 20px; color: var(--text-light); }
+        .footer-hearts { font-size: 1.5rem; margin-bottom: 10px; }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            justify-content: center; align-items: center;
+            cursor: zoom-out;
+        }
+
+        .lightbox.active { display: flex; }
+
+        .lightbox img {
+            max-width: 90%; max-height: 90%;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .lightbox-close {
+            position: absolute; top: 20px; right: 30px;
+            font-size: 2.5rem; color: white;
+            cursor: pointer; z-index: 2001;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .home-hero h1 { font-size: 2rem; }
+            .nav-links { gap: 5px; }
+            .nav-btn { padding: 8px 14px; font-size: 0.85rem; }
+            .profile-body { padding: 70px 20px 30px; }
+            .profile-name { font-size: 1.6rem; }
+            .profile-stats { gap: 20px; }
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+            .profile-header { height: 220px; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="logo" onclick="showSection('home')">🏠 我们的家</div>
+            <div class="nav-links">
+                <button class="nav-btn active" onclick="showSection('home')">首页</button>
+                <button class="nav-btn" onclick="showSection('wo')">🐱 窝窝</button>
+                <button class="nav-btn" onclick="showSection('yi')">🐱 伊伊</button>
+                <button class="nav-btn" onclick="showSection('yellowd')">👨‍💻 YellowD</button>
+                <button class="nav-btn" onclick="showSection('jiandan')">👩‍🌾 简单</button>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Home -->
+        <section id="home" class="section active">
+            <div class="home-hero">
+                <h1>欢迎来到我们的家 👋</h1>
+                <p>一个充满爱与温暖的四口之家 · 两只猫咪 + 两位铲屎官</p>
+                
+                <div class="family-grid">
+                    <div class="family-card wo" onclick="showSection('wo')">
+                        <img src="images/cats/窝窝.jpg" alt="窝窝" class="card-avatar" onerror="this.src='https://placehold.co/120x120/ff8c42/ffffff?text=窝窝'">
+                        <h3 class="card-name">窝窝</h3>
+                        <p class="card-role">家庭保安队长 · 伊伊的小冤家</p>
+                        <div class="card-tags">
+                            <span class="tag wo">短毛橘猫</span>
+                            <span class="tag wo">专业挑衅</span>
+                        </div>
+                    </div>
+
+                    <div class="family-card yi" onclick="showSection('yi')">
+                        <img src="images/cats/伊伊.jpg" alt="伊伊" class="card-avatar" onerror="this.src='https://placehold.co/120x120/6b5b95/ffffff?text=伊伊'">
+                        <h3 class="card-name">伊伊</h3>
+                        <p class="card-role">家庭颜值担当 · 挨打担当</p>
+                        <div class="card-tags">
+                            <span class="tag yi">长毛橘白</span>
+                            <span class="tag yi">温柔大度</span>
+                        </div>
+                    </div>
+
+                    <div class="family-card blue" onclick="showSection('yellowd')">
+                        <div class="card-avatar emoji-avatar" style="background: linear-gradient(135deg, #3498db, #5dade2);">👨‍💻</div>
+                        <h3 class="card-name">YellowD</h3>
+                        <p class="card-role">FPGA工程师 · 精酿爱好者</p>
+                        <div class="card-tags">
+                            <span class="tag blue">FPGA/VHDL</span>
+                            <span class="tag blue">IPA</span>
+                        </div>
+                    </div>
+
+                    <div class="family-card pink" onclick="showSection('jiandan')">
+                        <div class="card-avatar emoji-avatar" style="background: linear-gradient(135deg, #e91e63, #f06292);">👩‍🌾</div>
+                        <h3 class="card-name">简单</h3>
+                        <p class="card-role">花艺师 · 花园守护者</p>
+                        <div class="card-tags">
+                            <span class="tag pink">养花</span>
+                            <span class="tag pink">养猫</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 窝窝 -->
+        <section id="wo" class="section">
+            <button class="back-btn" onclick="showSection('home')">← 返回首页</button>
+            <div class="profile-container">
+                <div class="profile-header">
+                    <img src="images/cats/窝窝.jpg" alt="窝窝" class="profile-cover" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #ff8c42, #ffb380)'">
+                    <div class="profile-cover-gradient"></div>
+                    <div class="profile-avatar-container">
+                        <img src="images/cats/窝窝.jpg" alt="窝窝" class="profile-avatar" onerror="this.src='https://placehold.co/150x150/ff8c42/ffffff?text=窝窝'">
+                    </div>
+                </div>
+                <div class="profile-body">
+                    <h2 class="profile-name">窝窝 🍊</h2>
+                    <p class="profile-role">短毛橘猫 · 家庭保安队长 · 已绝育</p>
+                    <div class="profile-stats">
+                        <div class="stat"><div class="stat-value">5岁</div><div class="stat-label">年龄</div></div>
+                        <div class="stat"><div class="stat-value">6.5kg</div><div class="stat-label">体重</div></div>
+                        <div class="stat"><div class="stat-value">♂</div><div class="stat-label">性别</div></div>
+                    </div>
+                    <p class="profile-bio">
+                        窝窝是家里的老大，一只标准的橘色虎斑猫。虽然外表看起来憨厚老实，但其实是个超级黏人的小妖精。最喜欢的事情是坐在门口当"门神"，认真监视家里的一举一动。<br><br>
+                        <strong>⚠️ 小秘密：</strong>窝窝有个特别的"爱好"——喜欢主动挑衅伊伊！明明平时一脸严肃高冷的样子，看到伊伊就要凑过去"欺负"一下，经常把伊伊打倒在地上。但两个小家伙打完架还是好兄弟，这就是他们的日常。
+                    </p>
+                    <div class="profile-details">
+                        <div class="detail-item"><span class="detail-icon">🍖</span><div class="detail-content"><h4>最爱食物</h4><p>鸡肉罐头、冻干小鱼干</p></div></div>
+                        <div class="detail-item"><span class="detail-icon">🎮</span><div class="detail-content"><h4>favorite Toy</h4><p>激光笔、逗猫棒</p></div></div>
+                        <div class="detail-item"><span class="detail-icon">😴</span><div class="detail-content"><h4>最爱位置</h4><p>门口地板、沙发角落</p></div></div>
+                        <div class="detail-item"><span class="detail-icon">✨</span><div class="detail-content"><h4>特殊技能</h4><p>用严肃表情卖萌、欺负伊伊</p></div></div>
+                    </div>
+                    <div class="traits-container">
+                        <div class="trait"><div class="trait-header"><span class="trait-name">黏人程度</span><span class="trait-value">85%</span></div><div class="trait-bar"><div class="trait-progress wo" style="width: 85%"></div></div></div>
+                        <div class="trait"><div class="trait-header"><span class="trait-name">警觉性</span><span class="trait-value">95%</span></div><div class="trait-bar"><div class="trait-progress wo" style="width: 95%"></div></div></div>
+                        <div class="trait"><div class="trait-header"><span class="trait-name">干饭能力</span><span class="trait-value">90%</span></div><div class="trait-bar"><div class="trait-progress wo" style="width: 90%"></div></div></div>
+                        <div class="trait"><div class="trait-header"><span class="trait-name">战斗力</span><span class="trait-value">85%</span></div><div class="trait-bar"><div class="trait-progress wo" style="width: 85%"></div></div></div>
+                        <div class="trait"><div class="trait-header"><span class="trait-name">撒娇水平</span><span class="trait-value">70%</span></div><div class="trait-bar"><div class="trait-progress wo" style="width: 70%"></div></div></div>
+                        <div class="trait"><div class="trait-header"><span class="trait-name">欺负伊伊指数</span><span class="trait-value">88%</span></div><div class="trait-bar"><div class="trait-progress wo" style="width: 88%"></div></div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 伊伊 -->
+        <section id="yi" class="section">
+            <button class="back-btn" onclick="showSection('home')">← 返回首页</button>
+            <div class="profile-container">
+                <div class="profile-header">
+                    <img src="images/cats/伊伊.jpg" alt="伊伊" class="profile-cover" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #6b5b95, #9b8bc5)'">
+                    <div class="profile-cover-gradient"></div>
+                    <div class="profile-avatar-container">
+                        <img src="images/cats/伊伊.jpg" alt="伊伊" class="profile-avatar" onerror="this.src='https://placehold.co/150x150/6b5b95/ffffff?text=伊伊'">
+                    </div>
+                </div>
+                <div class="profile-body">
+                    <h2 class="profile-name">伊伊 🌸</h2>
+                    <p class="profile-role">长毛橘白猫 · 家庭颜值担当 · 已绝育</p>
+                    <div class="profile-stats">
+                        <div class="stat"><div class="stat-value">3岁</div><div class="stat-label">年龄</div></div>
+                        <div class="stat"><div class="stat-value">5kg</div><div class="stat-label">体重</div></div>
+                        <div class="stat"><div class="stat-value">♀</div><div class="stat-label">性别</div></div>
+                    </div>
+                    <p class="profile-bio">
+                        伊伊是家里的公主殿下，一只拥有绝美绿眼睛的长毛橘白猫。她的毛发蓬松柔软，像一团棉花糖。性格温顺优雅，喜欢静静地待在角落，偶尔露出甜美的笑容就能融化所有人的心。虽然看起来高冷，但其实是个小话痨，经常用软糯的叫声跟人交流。<br><br>
+                        <strong>💪 隐藏属性：</strong>伊伊是个超级温柔的大姐姐，面对窝窝的"欺负"从不记仇。被推倒在地上也不生气，翻个身起来又去找窝窝玩了。这种大度让铲屎官都佩服！
+                    </p>
+                    <div class="profile-details">
+                        <div class="detail-item"><span class="detail-icon">🍖</span><div class="detail-content"><h4>最爱食物</h4><p>三文鱼、猫条、羊奶</p></div></div>
+                        <div class="detail-item"><span class="detail-icon">🎮</span><div class="detail-content"><h4>Favorite Toy</h4><p>羽毛棒、毛线球</p></div></div>
+                        <div class="detail-item"><span class="detail-icon">😴</span><div class="detail-content"><h4>最爱位置</h4><p>阳光窗台、柔软猫窝</p></div></div>
+                        <div class="detail-item"><span class="detail-icon">✨</span><div class="detail-content"><h4>特殊技能</h4><p>歪头杀、踩奶按摩</p></div></div>
+                    </div>
+                    <div class="traits-container">
+                        <div class="trait"><div class="trait-header"><span class="trait-name">颜值指数</span><span class="trait-value">99%</span></div><div class="trait-bar"><div class="trait-progress yi" style="width: 99%"></div></div></div>
+                        <div class="trait"><div class="trait-header"><span class="trait-name">温柔程度</span><span class="trait-value">90%</span></div><div class="trait-bar"><div class="trait-progress yi" style="width: 90%"></div></div></div>
+                        <div class="trait"><div class="trait-header"><span class="trait-name">话痨指数</span><span class="trait-value">80%</span></div><div class="trait-bar"><div class="trait-progress yi" style="width: 80%"></div></div></div>
+                        <div class="trait"><div class="trait-header"><span class="trait-name">掉毛量</span><span class="trait-value">95%</span></div><div class="trait-bar"><div class="trait-progress yi" style="width: 95%"></div></div></div>
+                        <div class="trait"><div class="trait-header"><span class="trait-name">大度指数</span><span class="trait-value">98%</span></div><div class="trait-bar"><div class="trait-progress yi" style="width: 98%"></div></div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- YellowD -->
+        <section id="yellowd" class="section">
+            <button class="back-btn" onclick="showSection('home')">← 返回首页</button>
+            <div class="profile-container">
+                <div class="profile-header">
+                    <div class="emoji-cover" style="background: linear-gradient(135deg, #3498db, #5dade2);">💻</div>
+                    <div class="profile-cover-gradient"></div>
+                    <div class="profile-avatar-container">
+                        <div class="profile-avatar emoji-avatar-large" style="background: linear-gradient(135deg, #3498db, #5dade2);">👨‍💻</div>
+                    </div>
+                </div>
+                <div class="profile-body">
+                    <h2 class="profile-name" style="color: #3498db;">YellowD 👨‍💻</h2>
+                    <p class="profile-role">FPGA工程师 · FPGA/SOC开发者 · 精酿IPA爱好者</p>
+                    <div class="profile-stats">
+                        <div class="stat"><div class="stat-value" style="color: #3498db;">VHDL</div><div class="stat-label">硬件描述</div></div>
+                        <div class="stat"><div class="stat-value" style="color: #3498db;">C</div><div class="stat-label">编程语言</div></div>
+                        <div class="stat"><div class="stat-value" style="color: #3498db;">FPGA</div><div class="stat-label">开发领域</div></div>
+                    </div>
+                    <p class="profile-bio">
+                        一名专注于芯片开发的工程师，每天与FPGA和SoC打交道，用VHDL和C语言编写硬件逻辑。代码世界里的架构师，也是现实世界里的猫咪守护者。<br><br>
+                        <strong>🍺 精酿爱好者：</strong>工作之余，他最大的享受就是来一杯冰镇的精酿IPA。从野鹅微醺的"酒花层卷"到"星空"，从Jasper Double IPA到"季风"浑浊IPA，每一款都是他代码之余的最佳伴侣。他说，好的代码就像好的IPA——层次分明，回味无穷。
+                    </p>
+                    <div class="profile-details">
+                        <div class="detail-item"><span class="detail-icon">💼</span><div class="detail-content"><h4>职业</h4><p>FPGA工程师</p></div></div>
+                        <div class="detail-item"><span class="detail-icon">🔧</span><div class="detail-content"><h4>专业技能</h4><p>FPGA开发、SoC设计、VHDL、C语言</p></div></div>
+                        <div class="detail-item"><span class="detail-icon">💝</span><div class="detail-content"><h4>最幸福时刻</h4><p>debug完代码，窝窝跳上桌陪他的时刻</p></div></div>
+                        <div class="detail-item"><span class="detail-icon">⚖️</span><div class="detail-content"><h4>日常任务</h4><p>调解窝窝和伊伊的"邻里纠纷"</p></div></div>
+                        <div class="detail-item"><span class="detail-icon">🍺</span><div class="detail-content"><h4>业余爱好</h4><p>品鉴精酿IPA啤酒</p></div></div>
+                    </div>
+                    <div class="traits-container">
+                        <div class="trait"><div class="trait-header"><span class="trait-name">VHDL熟练度</span><span class="trait-value">95%</span></div><div class="trait-bar"><div class="trait-progress blue" style="width: 95%"></div></div></div>
+                        <div class="trait"><div class="trait-header"><span class="trait-name">C语言</span><span class="trait-value">90%</span></div><div class="trait-bar"><div class="trait-progress blue" style="width: 90%"></div></div></div>
+                        <div class="trait"><div class="trait-header"><span class="trait-name">FPGA开发</span><span class="trait-value">92%</span></div><div class="trait-bar"><div class="trait-progress blue" style="width: 92%"></div></div></div>
+                        <div class="trait"><div class="trait-header"><span class="trait-name">养猫技术</span><span class="trait-value">85%</span></div><div class="trait-bar"><div class="trait-progress blue" style="width: 85%"></div></div></div>
+                        <div class="trait"><div class="trait-header"><span class="trait-name">IPA品鉴力</span><span class="trait-value">92%</span></div><div class="trait-bar"><div class="trait-progress gold" style="width: 92%"></div></div></div>
+                    </div>
+                    <div class="gallery">
+                        <h3 class="gallery-title">🍺 精酿IPA收藏</h3>
+                        <p class="gallery-subtitle">写代码的灵感源泉 · 浑浊IPA爱好者 · 点击可放大查看</p>
+                        <div class="gallery-grid">
+                            <div class="gallery-item" onclick="openLightbox('images/beer/啤酒1.jpg')"><img src="images/beer/啤酒1.jpg" alt="野鹅微醺 酒花层卷" onerror="this.src='https://placehold.co/300x300/f39c12/ffffff?text=IPA'"></div>
+                            <div class="gallery-item" onclick="openLightbox('images/beer/啤酒2.jpg')"><img src="images/beer/啤酒2.jpg" alt="野鹅微醺 星空" onerror="this.src='https://placehold.co/300x300/9b59b6/ffffff?text=IPA'"></div>
+                            <div class="gallery-item" onclick="openLightbox('images/beer/啤酒3.jpg')"><img src="images/beer/啤酒3.jpg" alt="Jasper Double IPA" onerror="this.src='https://placehold.co/300x300/3498db/ffffff?text=IPA'"></div>
+                            <div class="gallery-item" onclick="openLightbox('images/beer/啤酒4.jpg')"><img src="images/beer/啤酒4.jpg" alt="野鹅微醺 季风" onerror="this.src='https://placehold.co/300x300/27ae60/ffffff?text=IPA'"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 简单 -->
+        <section id="jiandan" class="section">
+            <button class="back-btn" onclick="showSection('home')">← 返回首页</button>
+            <div class="profile-container">
+                <div class="profile-header">
+                    <div class="emoji-cover" style="background: linear-gradient(135deg, #e91e63, #f06292);">🌸</div>
+                    <div class="profile-cover-gradient"></div>
+                    <div class="profile-avatar-container">
+                        <div class="profile-avatar emoji-avatar-large" style="background: linear-gradient(135deg, #e91e63, #f06292);">👩‍🌾</div>
+                    </div>
+                </div>
+                <div class="profile-body">
+                    <h2 class="profile-name" style="color: #e91e63;">简单 👩‍🌾</h2>
+                    <p class="profile-role">花艺师 · 花园守护者 · 猫咪知心姐姐</p>
+                    <div class="profile-stats">
+                        <div class="stat"><div class="stat-value" style="color: #e91e63;">🌿</div><div class="stat-label">热爱养花</div></div>
+                        <div class="stat"><div class="stat-value" style="color: #e91e63;">🐱</div><div class="stat-label">热爱养猫</div></div>
+                        <div class="stat"><div class="stat-value" style="color: #e91e63;">❤️</div><div class="stat-label">温柔满分</div></div>
+                    </div>
+                    <p class="profile-bio">
+                        热爱生活的花艺师，家里总是花团锦簇、生机盎然。从紫色菊花到粉色玫瑰，从黄色蕙兰到白色马蹄莲，她对每一盆花草都细心照料，就像照料窝窝和伊伊一样用心。花和猫是她生活中最重要的两部分，一个治愈眼睛，一个治愈心灵。窝窝和伊伊都特别黏她，可能是因为她身上有花香，也可能是因为她的怀抱特别温暖。
+                    </p>
+                    <div class="profile-details">
+                        <div class="detail-item"><span class="detail-icon">🌷</span><div class="detail-content"><h4>兴趣爱好</h4><p>养花、养猫、布置温馨的家</p></div></div>
+                        <div class="detail-item"><span class="detail-icon">🏡</span><div class="detail-content"><h4>她的花园</h4><p>阳台上的绿色小天地</p></div></div>
+                        <div class="detail-item"><span class="detail-icon">💕</span><div class="detail-content"><h4>最幸福时刻</h4><p>浇花时伊伊在旁边"监工"</p></div></div>
+                        <div class="detail-item"><span class="detail-icon">🕊️</span><div class="detail-content"><h4>特殊技能</h4><p>调解窝窝和伊伊的矛盾</p></div></div>
+                    </div>
+                    <div class="traits-container">
+                        <div class="trait"><div class="trait-header"><span class="trait-name">花艺水平</span><span class="trait-value">95%</span></div><div class="trait-bar"><div class="trait-progress pink" style="width: 95%"></div></div></div>
+                        <div class="trait"><div class="trait-header"><span class="trait-name">养猫经验</span><span class="trait-value">90%</span></div><div class="trait-bar"><div class="trait-progress pink" style="width: 90%"></div></div></div>
+                        <div class="trait"><div class="trait-header"><span class="trait-name">温柔指数</span><span class="trait-value">99%</span></div><div class="trait-bar"><div class="trait-progress pink" style="width: 99%"></div></div></div>
+                        <div class="trait"><div class="trait-header"><span class="trait-name">和事佬能力</span><span class="trait-value">100%</span></div><div class="trait-bar"><div class="trait-progress pink" style="width: 100%"></div></div></div>
+                    </div>
+                    <div class="gallery">
+                        <h3 class="gallery-title">🌸 她的花园</h3>
+                        <p class="gallery-subtitle">花香四溢的小天地 · 生活的调色盘 · 点击可放大查看</p>
+                        <div class="gallery-grid">
+                            <div class="gallery-item" onclick="openLightbox('images/flowers/花1.jpg')"><img src="images/flowers/花1.jpg" alt="多彩花束" onerror="this.src='https://placehold.co/300x300/e91e63/ffffff?text=花'"></div>
+                            <div class="gallery-item" onclick="openLightbox('images/flowers/花2.jpg')"><img src="images/flowers/花2.jpg" alt="黄色康乃馨" onerror="this.src='https://placehold.co/300x300/f39c12/ffffff?text=花'"></div>
+                            <div class="gallery-item" onclick="openLightbox('images/flowers/花3.jpg')"><img src="images/flowers/花3.jpg" alt="紫色菊花" onerror="this.src='https://placehold.co/300x300/9b59b6/ffffff?text=花'"></div>
+                            <div class="gallery-item" onclick="openLightbox('images/flowers/花4.jpg')"><img src="images/flowers/花4.jpg" alt="花艺作品" onerror="this.src='https://placehold.co/300x300/e74c3c/ffffff?text=花'"></div>
+                            <div class="gallery-item" onclick="openLightbox('images/flowers/花5.jpg')"><img src="images/flowers/花5.jpg" alt="绿植" onerror="this.src='https://placehold.co/300x300/27ae60/ffffff?text=花'"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-hearts">🐱 ❤️ 🐱 ❤️ 👨‍💻 ❤️ 👩‍🌾</div>
+        <p>Made with love for our furry family members</p>
+        <p>© 2024 窝窝、伊伊与YellowD、简单的幸福小家</p>
+    </footer>
+
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <span class="lightbox-close">&times;</span>
+        <img src="" alt="放大查看" id="lightbox-img">
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            const navMap = { 'home': 0, 'wo': 1, 'yi': 2, 'yellowd': 3, 'jiandan': 4 };
+            const btnIndex = navMap[sectionId];
+            if (btnIndex !== undefined) {
+                document.querySelectorAll('.nav-btn')[btnIndex].classList.add('active');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function openLightbox(imgSrc) {
+            document.getElementById('lightbox-img').src = imgSrc;
+            document.getElementById('lightbox').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeLightbox();
+        });
+    </script>
+</body>
+</html>
