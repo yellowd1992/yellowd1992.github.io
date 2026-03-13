@@ -1,84 +1,90 @@
 # 我们的家 | Our Family
 
-使用 Vue 3 + Vite 重构的家庭展示网站。
+一个温馨的家庭展示网站，记录两只可爱猫咪和两位铲屎官的幸福生活。
 
-## 项目结构
+## 🏠 网站介绍
+
+这是一个纯静态的单页网站，展示了一个四口之家：
+
+| 成员 | 身份 | 特点 |
+|------|------|------|
+| 🐱 窝窝 | 短毛橘猫 | 家庭保安队长，喜欢黏人，最爱"欺负"伊伊 |
+| 🐱 伊伊 | 长毛橘白猫 | 颜值担当，温柔大度，绿眼睛公主 |
+| 👨‍💻 YellowD | FPGA工程师 | 精酿IPA爱好者，代码世界里的架构师 |
+| 👩‍🌾 简单 | 花艺师 | 花园守护者，猫咪知心姐姐 |
+
+## ✨ 功能特点
+
+- **响应式设计** - 适配桌面端和移动端
+- **单页应用体验** - 无刷新页面切换，流畅的导航体验
+- **个人资料页** - 每位成员都有详细的介绍页面，包含：
+  - 个人简介和故事
+  - 特性进度条（黏人程度、颜值指数等）
+  - 详细信息卡片
+  - 图片画廊（精酿啤酒收藏、花园花卉）
+- **灯箱效果** - 点击画廊图片可放大查看
+- **毛玻璃导航栏** - 现代化的视觉设计
+- **CSS 动画** - 悬浮、渐变、淡入等交互动效
+
+## 📁 项目结构
 
 ```
-family/
-├── index.html              # 入口 HTML 文件
-├── package.json            # 项目依赖配置
-├── vite.config.js          # Vite 配置
-├── README.md               # 项目说明
-├── images/                 # 图片资源
-│   ├── beer/               # 精酿啤酒图片
-│   │   ├── 啤酒1.jpg
-│   │   ├── 啤酒2.jpg
-│   │   ├── 啤酒3.jpg
-│   │   └── 啤酒4.jpg
-│   ├── cats/               # 猫咪图片
-│   │   ├── 窝窝.jpg
-│   │   └── 伊伊.jpg
-│   └── flowers/            # 花卉图片
-│       ├── 花1.jpg
-│       ├── 花2.jpg
-│       ├── 花3.jpg
-│       ├── 花4.jpg
-│       └── 花5.jpg
-└── src/
-    ├── main.js             # 应用入口
-    ├── App.vue             # 根组件
-    ├── components/         # Vue 组件
-    │   ├── Navigation.vue      # 导航栏
-    │   ├── HomeSection.vue     # 首页
-    │   ├── FamilyCard.vue      # 家庭成员卡片
-    │   ├── ProfileSection.vue  # 个人资料页
-    │   ├── TraitBar.vue        # 特性进度条
-    │   ├── DetailItem.vue      # 详情项
-    │   ├── Gallery.vue         # 图片画廊
-    │   ├── Lightbox.vue        # 图片灯箱
-    │   └── Footer.vue          # 页脚
-    ├── data/
-    │   └── members.js      # 成员数据
-    └── styles/
-        └── global.css      # 全局样式
+.
+├── index.html          # 主页面（包含所有 HTML、CSS、JS）
+├── README.md           # 项目说明
+├── CNAME               # 自定义域名配置
+├── .gitignore          # Git 忽略文件
+└── images/             # 图片资源
+    ├── cats/           # 猫咪照片
+    │   ├── 窝窝.jpg
+    │   └── 伊伊.jpg
+    ├── beer/           # 精酿啤酒收藏
+    │   ├── 啤酒1.jpg
+    │   ├── 啤酒2.jpg
+    │   ├── 啤酒3.jpg
+    │   └── 啤酒4.jpg
+    └── flowers/        # 花卉照片
+        ├── 花1.jpg
+        ├── 花2.jpg
+        ├── 花3.jpg
+        ├── 花4.jpg
+        └── 花5.jpg
 ```
 
-## 安装依赖
+## 🚀 部署
 
-```bash
-npm install
-```
+这是一个纯静态网站，可以直接部署到任何静态托管服务：
 
-## 开发运行
+- **GitHub Pages** - 已配置 CNAME，可直接部署
+- **Vercel / Netlify** - 拖拽上传即可
+- **Nginx / Apache** - 直接复制文件到网站目录
 
-```bash
-npm run dev
-```
+## 🛠 技术栈
 
-## 构建生产版本
+- **纯原生技术** - 无框架依赖
+- HTML5 + CSS3 + JavaScript (ES6+)
+- CSS Variables - 主题色彩管理
+- CSS Grid & Flexbox - 响应式布局
+- Intersection Observer API - 动画触发
 
-```bash
-npm run build
-```
+## 🎨 设计特色
 
-## 预览生产版本
+- **温暖配色** - 暖橙色、奶油色为主调，营造家的温馨感
+- **圆角设计** - 大量使用圆角，柔和友好
+- **渐变色** - 每位成员专属的主题渐变色
+- **微交互** - 悬浮、点击反馈，提升用户体验
 
-```bash
-npm run preview
-```
+## 📝 使用说明
 
-## 重构亮点
+1. 克隆仓库到本地
+2. 在 `images/` 目录替换自己的图片
+3. 修改 `index.html` 中的文字内容
+4. 部署到任意静态托管服务
 
-1. **组件化架构**：将页面拆分为独立的 Vue 组件，每个组件职责单一
-2. **数据与视图分离**：成员数据统一存放在 `data/members.js` 中
-3. **现代框架**：使用 Vue 3 Composition API，代码更清晰
-4. **响应式设计**：保留原版的响应式布局
-5. **资源分类管理**：图片按类型分文件夹存放
+## 📄 License
 
-## 技术栈
+MIT License - 欢迎自由使用和修改
 
-- Vue 3
-- Vite
-- CSS Variables
-- ES6 Modules
+---
+
+Made with ❤️ for our furry family members
